@@ -3,7 +3,7 @@ import os
 
 from .extensions import db
 from .api import api
-from .commands import say_hi, create_tables
+from .commands import say_hi, create_tables, seed_questions
 
 def create_app(config_file="settings.py"):
     app = Flask(__name__)
@@ -16,5 +16,6 @@ def create_app(config_file="settings.py"):
 
     app.cli.add_command(say_hi)
     app.cli.add_command(create_tables)
+    app.cli.add_command(seed_questions)
 
     return app
