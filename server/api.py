@@ -26,7 +26,6 @@ def add_question():
 
     if not question or not options or not answer: 
         return jsonify("There was an issue adding a question, please provide a valid question with options and an answer"), 400
-    
 
     try:
         new_question = Question(question=question, option=options, answer=answer)
@@ -39,10 +38,13 @@ def add_question():
 
 @api.route('/api/getQuestion', methods=["POST", "GET"])
 def get_question():
+    """given a number, return the number of questions equals to the number"""
+
+    questions_number = request.get_json()
     all_query = Question.query.all()
     questions_ids = set()
     questions = []
-    while len(questions_ids) != 20:
+    while len(questions_ids) != questions_number:
         chosen_question = random.choice(all_query)
         if chosen_question.id not in questions_ids:
             questions_ids.add(chosen_question.id)
