@@ -41,21 +41,30 @@ def get_question():
     """given a number, return the number of questions equals to the number"""
 
     questions_number = request.get_json()
-    all_query = Question.query.all()
-    questions_ids = set()
-    questions = []
-    while len(questions_ids) != questions_number:
-        chosen_question = random.choice(all_query)
-        if chosen_question.id not in questions_ids:
-            questions_ids.add(chosen_question.id)
-            options = shuffleOptions(chosen_question.option, chosen_question.answer)
-            
-            question = {
-                "question": chosen_question.question,
-                "options": options,
-                "answer": chosen_question.answer
-            }
-            questions.append(question)
     
-    return jsonify(questions)
-    
+    if not questions_number:
+        return jsonify("Unable to get questions, please try again."), 400
+
+
+    try:
+        all_query = Question.query.all()
+        questions_ids = set()
+        questions = []
+        while len(questions_ids) != 10:
+            chosen_question = random.choice(all_query)
+            print(chosen_question.id)
+            if chosen_question.id not in questions_ids:
+                questions_ids.add(chosen_question.id)
+                options = shuffleOptions(chosen_question.option, chosen_question.answer)
+                
+                question = {
+                    "question": chosen_question.question,
+                    "options": options,
+                    "answer": chosen_question.answer
+                }
+                questions.append(question)
+        
+        return jsonify(questions), 200
+    except: 
+        return jsonify("Unable to get questions, please try again."), 400
+        
