@@ -50,7 +50,7 @@ def get_question():
         all_query = Question.query.all()
         questions_ids = set()
         questions = []
-        while len(questions_ids) != 10:
+        while len(questions_ids) != questions_number:
             chosen_question = random.choice(all_query)
             print(chosen_question.id)
             if chosen_question.id not in questions_ids:
