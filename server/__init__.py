@@ -7,7 +7,6 @@ from .commands import say_hi, create_tables, seed_questions
 
 def create_app(config_file="settings.py"):
     app = Flask(__name__)
-    print("hello")
 
     app.config.from_pyfile(config_file)
     db.init_app(app)

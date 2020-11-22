@@ -21,7 +21,7 @@ def add_question():
 
     new_question = request.get_json()
     question = new_question["question"]
-    options = (",").join(new_question["options"])
+    options = ("/").join(new_question["options"])
     answer = new_question["answer"]
 
     if not question or not options or not answer: 
