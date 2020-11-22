@@ -7,7 +7,7 @@ def load_sample_questions():
 
     for question in sample_questions:
         current_question = question['question']
-        incorrect_options = ",".join(question['incorrect'])
+        incorrect_options = "/".join(question['incorrect'])
         correct_answer = question['correct']
 
         add_question = Question(question=current_question, option=incorrect_options, answer=correct_answer)
