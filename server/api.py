@@ -3,7 +3,7 @@ from flask_cors import CORS
 import sys
 import random
 
-from .model import Question
+from .model import Question, Message
 from .extensions import db
 from .helpers import shuffleOptions
 
@@ -67,4 +67,53 @@ def get_question():
         return jsonify(questions), 200
     except: 
         return jsonify("Unable to get questions, please try again."), 400
+
+@api.route('/api/addMessage', methods=["POST", "GET"])
+def post_message():
+    """given a message, add message to the database"""
+
+    message_response = request.get_json()
+
+    name = message_response["name"]
+    message = message_response["message"]
+
+    try:
+        new_message = Message(message=message, name=name)
+        db.session.add(new_message)
+        db.session.commit()
+        return jsonify("Message added"), 200
+    except:
+        return jsonify("There was an issue adding the message, please try again."), 400
+    
+@api.route('/api/getMessage', methods=["POST", "GET"])
+def get_message():
+    """get back birthday messages from the backend"""
+
+    try:
+        all_messages = Message.query.all()
+        messages = []
+
+        for message in all_messages:
+            single_message = {
+                "message": message.message,
+                "name": message.name
+            }
+            messages.append(single_message)
+        
+        return jsonify(messages), 200
+    except:
+        return jsonify("Unable to retrieve messages, please try again")
+
+
+
+
+
+
+
+
+
+
+
+
+    
         
