@@ -74,10 +74,10 @@ def post_message():
 
     message_response = request.get_json()
 
-    name = message_response["name"]
-    message = message_response["message"]
 
     try:
+        name = message_response["name"]
+        message = message_response["message"]
         new_message = Message(message=message, name=name)
         db.session.add(new_message)
         db.session.commit()

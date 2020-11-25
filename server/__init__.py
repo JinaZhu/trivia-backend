@@ -16,3 +16,5 @@ def create_app(config_file="settings.py"):
     app.cli.add_command(say_hi)
     app.cli.add_command(create_tables)
     app.cli.add_command(seed_questions)
+
+    return app
